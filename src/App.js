@@ -1,14 +1,22 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import Modal from "./Modal";
+import ReactModal from "react-modal";
+import music from "./sleighride.mp3";
 import Market from "./components/Market";
 
-const apiDataHeroku = "https://christmasmarketshackathon.herokuapp.com/api/christmasmarkets";
+ReactModal.setAppElement("#root");
+
+const apiDataHeroku =
+  "https://christmasmarketshackathon.herokuapp.com/api/christmasmarkets";
 
 function App() {
   //----------USE STATE-----------------------------------------
   const [markets, setMarkets] = useState([]);
+
+  /*popupwindow const*/
+  const [show, setShow] = useState(false);
 
   //----------USE EFFECT----------------------------------------
   useEffect(() => {
@@ -29,16 +37,25 @@ function App() {
     }
   };
 
+  /*popupwindow function*/
+  const onOpen = () => setShow(true);
+
+  const onClose = () => setShow(false);
+
+  /*open popupwindow onclick*/
+  const onClick = () => {
+    onOpen();
+  };
+
   //----------RETURN-------------------------------------------
   return (
     <div className="App">
       <Market markets={markets} />
-      <div>
-        <img
-          className="background"
-          src="./xmasbackground"
-          alt="xmasbackground"
-        />
+      <div className="audio">
+        <audio controls loop autoplay className="musicplayer">
+          <source src={music} type="audio/mp3" />
+        </audio>
+        <img className="background" src="xmasbackground" alt="xmasbackground" />
       </div>
       <div className="description">
         <h1>White Christmas</h1>
@@ -52,7 +69,10 @@ function App() {
         </select>
         {/* <input type="submit" /> */}
       </form>
-      <button className="generatebtn">Generate</button>
+      <button className="generatebtn" onClick={() => onClick()}>
+        Generate
+      </button>
+      <Modal show={show} onClose={onClose} />
     </div>
   );
 }
