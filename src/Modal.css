@@ -6,7 +6,7 @@
   background-color: #eae7dc;
   border-radius: 2px;
   margin: 48px 0 80px;
-  width: 500px;
+  width: 1200px;
   height: fit-content;
   outline: none;
   padding: 20px;
@@ -41,6 +41,7 @@
 
 .close-btn-ctn {
   display: flex;
+  justify-content: flex-end;
 }
 
 .close-btn {

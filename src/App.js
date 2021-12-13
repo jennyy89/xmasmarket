@@ -4,7 +4,6 @@ import axios from "axios";
 import Modal from "./Modal";
 import ReactModal from "react-modal";
 import music from "./sleighride.mp3";
-import Market from "./components/Market";
 
 ReactModal.setAppElement("#root");
 
@@ -18,6 +17,9 @@ function App() {
   /*popupwindow const*/
   const [show, setShow] = useState(false);
 
+  const [city, setCity] = useState("Aalen");
+  const [filterMarkets, setFilterMarkets] = useState([]);
+
   //----------USE EFFECT----------------------------------------
   useEffect(() => {
     getData();
@@ -25,6 +27,10 @@ function App() {
 
   useEffect(() => {
     console.log("Modified and saved data into useState: ");
+    const visibleMarkets = markets.filter(
+      (market) => market.market_location === city
+    );
+    setFilterMarkets(visibleMarkets);
   }, [markets]);
 
   //----------FUNCTIONS-----------------------------------------
@@ -44,18 +50,23 @@ function App() {
 
   /*open popupwindow onclick*/
   const onClick = () => {
+    getData();
     onOpen();
   };
 
+  /*setting places*/
+  const handleChange = (el) => {
+    setCity(el.target.value);
+  };
+
   //----------RETURN-------------------------------------------
+  console.log(city);
   return (
     <div className="App">
-      <Market markets={markets} />
       <div className="audio">
-        <audio controls loop autoplay className="musicplayer">
+        <audio controls loop /*autoPlay*/ className="musicplayer">
           <source src={music} type="audio/mp3" />
         </audio>
-        <img className="background" src="xmasbackground" alt="xmasbackground" />
       </div>
       <div className="description">
         <h1>White Christmas</h1>
@@ -63,16 +74,24 @@ function App() {
       </div>
       <form action="/action_page.php">
         <label for="places">Select Location</label>
-        <select id="place" name="place">
-          <option value="munich">Munich</option>
-          <option value="berlin">Berlin</option>
+        <select id="place" name="place" onChange={handleChange}>
+          <option value="Aalen">Aalen</option>
+          <option value="Kippenheim">Kippenheim</option>
+          <option value="Ludwigsburg">Ludwigsburg</option>
+          <option value="Bad Mergentheim">Bad Mergentheim</option>
+          <option value="Ulm">Ulm</option>
+          <option value="Calw">Calw</option>
+          <option value="Donzdorf">Donzdorf</option>
+          <option value="Esslingen">Esslingen</option>
+          <option value="Friedrichshafen">Friedrichshafen</option>
+          <option value="Gerolstein">Gerolstein</option>
         </select>
         {/* <input type="submit" /> */}
       </form>
       <button className="generatebtn" onClick={() => onClick()}>
         Generate
       </button>
-      <Modal show={show} onClose={onClose} />
+      <Modal show={show} onClose={onClose} markets={filterMarkets} />
     </div>
   );
 }
