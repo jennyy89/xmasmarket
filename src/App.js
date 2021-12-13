@@ -1,8 +1,38 @@
 import "./App.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+import Market from "./components/Market";
+
+const apiDataHeroku = "https://recipes-app-wbs.herokuapp.com/api/recipes";
 
 function App() {
+  //----------USE STATE-----------------------------------------
+  const [markets, setMarkets] = useState([]);
+
+  //----------USE EFFECT----------------------------------------
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    console.log("Modified and saved data into useState: ");
+  }, [markets]);
+
+  //----------FUNCTIONS-----------------------------------------
+  const getData = async () => {
+    try {
+      const results = await axios.get(apiDataHeroku);
+      setMarkets(results.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //----------RETURN-------------------------------------------
   return (
     <div className="App">
+      <Market markets={markets} />
       <div>
         <img
           className="background"
