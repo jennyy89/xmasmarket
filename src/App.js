@@ -4,7 +4,7 @@ import axios from "axios";
 
 import Market from "./components/Market";
 
-const apiDataHeroku = "https://recipes-app-wbs.herokuapp.com/api/recipes";
+const apiDataHeroku = "https://christmasmarketshackathon.herokuapp.com/api/christmasmarkets";
 
 function App() {
   //----------USE STATE-----------------------------------------
