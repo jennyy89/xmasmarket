@@ -14,7 +14,7 @@ const Market = ({ markets }) => {
               <img src={market.market_image} alt="" />
             </div>
             <div className="floatright">
-              <h1>{market.market_name}</h1>
+              <h1 className="markettitle">{market.market_name}</h1>
               <div>{market.market_link}</div>
               <div>{market.market_address}</div>
               <div>{market.market_description}</div>
