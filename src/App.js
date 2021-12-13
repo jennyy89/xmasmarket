@@ -1,14 +1,32 @@
 import "./App.css";
+import Modal from "./Modal";
+import React, { useState } from "react";
+import ReactModal from "react-modal";
+import music from "./sleighride.mp3";
+
+ReactModal.setAppElement("#root");
 
 function App() {
+  /*popupwindow const*/
+  const [show, setShow] = useState(false);
+
+  /*popupwindow function*/
+  const onOpen = () => setShow(true);
+
+  const onClose = () => setShow(false);
+
+  /*open popupwindow onclick*/
+  const onClick = () => {
+    onOpen();
+  };
+
   return (
     <div className="App">
-      <div>
-        <img
-          className="background"
-          src="./xmasbackground"
-          alt="xmasbackground"
-        />
+      <div className="audio">
+        <audio controls loop autoplay className="musicplayer">
+          <source src={music} type="audio/mp3" />
+        </audio>
+        <img className="background" src="xmasbackground" alt="xmasbackground" />
       </div>
       <div className="description">
         <h1>White Christmas</h1>
@@ -22,7 +40,10 @@ function App() {
         </select>
         {/* <input type="submit" /> */}
       </form>
-      <button className="generatebtn">Generate</button>
+      <button className="generatebtn" onClick={() => onClick()}>
+        Generate
+      </button>
+      <Modal show={show} onClose={onClose} />
     </div>
   );
 }
